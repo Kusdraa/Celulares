@@ -1,0 +1,55 @@
+/* ==========================================================================
+   Estilos Personalizados para o Comparador de Preços (Brasil vs Paraguai)
+   ========================================================================== */
+
+/* Transições suaves ao alternar entre Modo Claro e Modo Escuro */
+body,
+div,
+table,
+tr,
+th,
+td,
+select,
+input,
+button {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Scrollbar fina e moderna */
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.25);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.4);
+}
+
+/* Animações e estados de foco */
+input:focus,
+select:focus {
+  outline: none;
+}
+
+/* Badge de destaque */
+.badge-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}

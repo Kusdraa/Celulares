@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparativo: iPhone & Samsung Galaxy (Brasil vs Paraguai)</title>
+  
+  <!-- Tailwind CSS CDN Universal (Funciona no GitHub Pages, Vercel, Netlify e Local) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 500: '#3b82f6', 600: '#2563eb' }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Arquivo de Estilos Externo -->
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body class="bg-slate-100/80 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased p-3 sm:p-5 selection:bg-blue-500 selection:text-white min-h-screen">
+  
+  <div class="max-w-7xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-6 shadow-xl space-y-6">
+    
+    <!-- Top Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
+      <div>
+        <div class="flex items-center gap-3">
+          <span class="inline-flex items-center justify-center p-2.5 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold shadow-sm">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+          </span>
+          <div>
+            <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Comparativo: Apple & Samsung (Brasil vs Paraguai)</h1>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              Preços em lojas oficiais e confiáveis no Brasil (Amazon, Magalu, Mercado Livre) e Ciudad del Este (Nissei, Cellshop, Mega).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls: Dark Mode Toggle & Dólar Simulator -->
+      <div class="flex flex-wrap items-center gap-3">
+        
+        <!-- Botão de Modo Escuro / Claro -->
+        <button 
+          id="themeToggleBtn"
+          onclick="toggleTheme()" 
+          class="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-amber-300 border border-slate-300 dark:border-slate-700 shadow-sm transition active:scale-95 cursor-pointer">
+          <span id="themeIcon">
+            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path></svg>
+          </span>
+          <span id="themeText">Modo Escuro</span>
+        </button>
+
+        <!-- Simulador de Cotação do Dólar -->
+        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-950 p-2.5 sm:p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-inner">
+          <div class="text-right">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block leading-tight">Cotação do Dólar</span>
+            <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">Turismo CDE</span>
+          </div>
+          <div class="relative">
+            <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">R$</span>
+            <input 
+              type="number" 
+              id="dolarRate" 
+              step="0.01" 
+              min="1.00" 
+              max="20.00" 
+              value="5.35" 
+              class="w-24 pl-8 pr-2 py-1.5 text-sm font-bold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-right focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-slate-100 shadow-sm"
+              oninput="recalculatePrices()"
+            />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Quick Stats Cards (Design Original com Cores Suaves) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div class="p-3.5 sm:p-4 rounded-xl bg-blue-500/5 dark:bg-blue-500/10 border border-blue-500/20">
+        <p class="text-xs text-slate-500 dark:text-slate-400">Dólar Comercial Hoje</p>
+        <p class="text-lg sm:text-xl font-bold text-blue-600 dark:text-blue-400 mt-1">R$ 5,20</p>
+        <p class="text-[10px] text-slate-400 dark:text-slate-500">Fechamento mercado</p>
+      </div>
+      <div class="p-3.5 sm:p-4 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20">
+        <p class="text-xs text-slate-500 dark:text-slate-400">Dólar Turismo / Lojas CDE</p>
+        <p class="text-lg sm:text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="statDolarRef">R$ 5,35</p>
+        <p class="text-[10px] text-slate-400 dark:text-slate-500">Câmbio médio de fronteira</p>
+      </div>
+      <div class="p-3.5 sm:p-4 rounded-xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/20">
+        <p class="text-xs text-slate-500 dark:text-slate-400">Cota Terrestre Isenção</p>
+        <p class="text-lg sm:text-xl font-bold text-amber-600 dark:text-amber-400 mt-1">US$ 500,00</p>
+        <p class="text-[10px] text-slate-400 dark:text-slate-500">50% sobre excedente na alfândega</p>
+      </div>
+      <div class="p-3.5 sm:p-4 rounded-xl bg-purple-500/5 dark:bg-purple-500/10 border border-purple-500/20">
+        <p class="text-xs text-slate-500 dark:text-slate-400">Maior Economia em Novo</p>
+        <p class="text-lg sm:text-xl font-bold text-purple-600 dark:text-purple-400 mt-1" id="statMaxSaving">~R$ 2.077</p>
+        <p class="text-[10px] text-slate-400 dark:text-slate-500">iPhone 15 Pro Max 256GB</p>
+      </div>
+    </div>
+
+    <!-- Filters & Controls Bar -->
+    <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+      <div class="flex flex-wrap items-center gap-2">
+        
+        <!-- Brand Filter -->
+        <select id="filterBrand" onchange="onBrandChange()" class="text-xs sm:text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium text-slate-700 dark:text-slate-200 shadow-sm">
+          <option value="ALL">Todas as Marcas</option>
+          <option value="Apple">Apple (iPhones)</option>
+          <option value="Samsung">Samsung (Galaxy S)</option>
+        </select>
+
+        <!-- Model Filter -->
+        <select id="filterModel" onchange="filterData()" class="text-xs sm:text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium text-slate-700 dark:text-slate-200 shadow-sm">
+          <option value="ALL">Todos os Modelos</option>
+          <optgroup label="Apple iPhone" id="groupApple">
+            <option value="iPhone 14">iPhone 14</option>
+            <option value="iPhone 14 Plus">iPhone 14 Plus (14 Max)</option>
+            <option value="iPhone 14 Pro">iPhone 14 Pro</option>
+            <option value="iPhone 14 Pro Max">iPhone 14 Pro Max</option>
+            <option value="iPhone 15">iPhone 15</option>
+            <option value="iPhone 15 Plus">iPhone 15 Plus (15 Max)</option>
+            <option value="iPhone 15 Pro">iPhone 15 Pro</option>
+            <option value="iPhone 15 Pro Max">iPhone 15 Pro Max</option>
+          </optgroup>
+          <optgroup label="Samsung Galaxy" id="groupSamsung">
+            <option value="Galaxy S24">Galaxy S24</option>
+            <option value="Galaxy S25">Galaxy S25</option>
+            <option value="Galaxy S25 Plus">Galaxy S25 Plus</option>
+          </optgroup>
+        </select>
+
+        <!-- Country Filter -->
+        <select id="filterCountry" onchange="filterData()" class="text-xs sm:text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium text-slate-700 dark:text-slate-200 shadow-sm">
+          <option value="ALL">Brasil & Paraguai</option>
+          <option value="Brasil">Apenas Brasil</option>
+          <option value="Paraguai">Apenas Paraguai</option>
+        </select>
+
+        <!-- Condition Filter -->
+        <select id="filterCondition" onchange="filterData()" class="text-xs sm:text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium text-slate-700 dark:text-slate-200 shadow-sm">
+          <option value="ALL">Todas Condições</option>
+          <option value="Novo">Apenas Novos (Lacrados)</option>
+          <option value="Swap">Swap / Recondicionado</option>
+        </select>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <input 
+          type="text" 
+          id="searchBox" 
+          placeholder="Buscar loja ou modelo..." 
+          oninput="filterData()" 
+          class="text-xs sm:text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 w-36 sm:w-52 focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-slate-100 placeholder-slate-400 shadow-sm"
+        />
+        <button 
+          onclick="downloadCSV()" 
+          class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition shadow-sm active:scale-95 cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          Exportar CSV
+        </button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+      <table class="w-full text-left border-collapse text-xs sm:text-sm">
+        <thead class="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 uppercase text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+          <tr>
+            <th class="py-3 px-4">Modelo</th>
+            <th class="py-3 px-3">Condição</th>
+            <th class="py-3 px-3">País</th>
+            <th class="py-3 px-4">Loja Confiável</th>
+            <th class="py-3 px-3 text-right">Preço USD</th>
+            <th class="py-3 px-3 text-right">Preço em Reais</th>
+            <th class="py-3 px-3 text-right">Comparativo / Economia</th>
+            <th class="py-3 px-3 text-center">Status</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody" class="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-slate-900">
+          <!-- Renderizado via script.js -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footnotes & Essential Guidance -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-200 dark:border-slate-800">
+      <div class="space-y-1">
+        <p class="font-semibold text-slate-800 dark:text-slate-200">Dicas de Compra no Paraguai (Ciudad del Este):</p>
+        <ul class="list-disc list-inside space-y-0.5">
+          <li><strong>Lojas recomendadas:</strong> Casa Nissei (Autorizada Apple), Cellshop, Mega Eletrônicos e Madrid Center.</li>
+          <li><strong>Novo vs. Swap:</strong> "Swap Grade A" são aparelhos recondicionados/trocas sem caixa original. Para lacrado novo, exija caixa fechada com selo Apple.</li>
+          <li><strong>Pagamento:</strong> Dólar em espécie oferece a melhor taxa. Cartão de crédito brasileiro sofre acréscimo de IOF e sobretaxa da maquininha (~5% a 7%).</li>
+        </ul>
+      </div>
+      <div class="space-y-1">
+        <p class="font-semibold text-slate-800 dark:text-slate-200">Cota Aduaneira & Garantia:</p>
+        <ul class="list-disc list-inside space-y-0.5">
+          <li><strong>Cota Terrestre:</strong> US$ 500 por CPF. O excedente recolhe 50% de imposto na aduana da Receita Federal.</li>
+          <li><strong>Uso Pessoal:</strong> Se o aparelho for o seu único smartphone em uso (com chip brasileiro ativo e fora da caixa), a legislação aduaneira brasileira pode isentar como bem de uso pessoal na viagem.</li>
+          <li><strong>Garantia Apple:</strong> A Apple oferece 1 ano de garantia mundial válida no Brasil para modelos homologados Anatel ou equivalentes globais (A3090, A3106, etc.).</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Arquivo de Lógica JavaScript Externo -->
+  <script src="./script.js"></script>
+</body>
+</html>
